@@ -33,13 +33,13 @@ class ViewController: UIViewController {
         isFinishedTypingNumber = true
         
         if let calcMethod = sender.currentTitle {
-            if calcMethod == "+/-" {
-                displayValue *= -1
-            } else if calcMethod == "AC" {
-                displayLabel.text = "0"
-            } else if calcMethod == "%" {
-                displayValue *= 0.01
+            
+            let calculator = CalculatorLogic(number: displayValue)
+            guard let result = calculator.calculate(symbol: calcMethod) else {
+                fatalError("The result of the calculation is nil")
             }
+            
+            displayValue = result
         }
         
         
@@ -48,6 +48,7 @@ class ViewController: UIViewController {
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
         
+        // AEC: issue when you press the decimal place number times
         // What should happen when a number is entered into the keypad
     
         if let numValue = sender.currentTitle {
